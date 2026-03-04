@@ -662,4 +662,50 @@ public class QuantityMeasurementAppTest {
             new Quantity<>(Double.NaN, LengthUnit.FEET);
         });
     }
+    @Test
+    void testEquality_LitreToMillilitre() {
+        Quantity<VolumeUnit> litre = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> ml = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+
+        assertTrue(litre.equals(ml));
+    }
+    @Test
+    void testEquality_LitreToGallon() {
+        Quantity<VolumeUnit> litre = new Quantity<>(3.78541, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> gallon = new Quantity<>(1.0, VolumeUnit.GALLON);
+
+        assertTrue(litre.equals(gallon));
+    }
+    @Test
+    void testConversion_LitreToMillilitre() {
+        Quantity<VolumeUnit> litre = new Quantity<>(1.0, VolumeUnit.LITRE);
+
+        Quantity<VolumeUnit> result = litre.convertTo(VolumeUnit.MILLILITRE);
+
+        assertEquals(new Quantity<>(1000.0, VolumeUnit.MILLILITRE), result);
+    }
+    @Test
+    void testConversion_GallonToLitre() {
+        Quantity<VolumeUnit> gallon = new Quantity<>(1.0, VolumeUnit.GALLON);
+
+        Quantity<VolumeUnit> result = gallon.convertTo(VolumeUnit.LITRE);
+
+        assertEquals(new Quantity<>(3.78541, VolumeUnit.LITRE), result);
+    }
+    @Test
+    void testAddition_LitrePlusMillilitre() {
+        Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+
+        assertEquals(new Quantity<>(2.0, VolumeUnit.LITRE), v1.add(v2));
+    }
+    @Test
+    void testAddition_TargetMillilitre() {
+        Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+
+        assertEquals(new Quantity<>(2000.0, VolumeUnit.MILLILITRE),
+                v1.add(v2, VolumeUnit.MILLILITRE));
+    }
+
 }

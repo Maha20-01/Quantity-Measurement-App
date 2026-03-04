@@ -176,4 +176,15 @@ public class QuantityMeasurementApp {
 
         System.out.println("Subtraction: " + l1.subtract(l2));
         System.out.println("Division: " + l1.divide(l2));
+
+
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(0, TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(32, TemperatureUnit.FAHRENHEIT);
+
+        System.out.println(t1.equals(t2));
+
+        System.out.println(t1.convertTo(TemperatureUnit.FAHRENHEIT));
 }}

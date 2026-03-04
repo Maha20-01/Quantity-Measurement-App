@@ -707,5 +707,20 @@ public class QuantityMeasurementAppTest {
         assertEquals(new Quantity<>(2000.0, VolumeUnit.MILLILITRE),
                 v1.add(v2, VolumeUnit.MILLILITRE));
     }
+    @Test
+    void testSubtraction_FeetMinusInches() {
 
+        Quantity<LengthUnit> l1 = new Quantity<>(10.0, LengthUnit.FEET);
+        Quantity<LengthUnit> l2 = new Quantity<>(6.0, LengthUnit.INCHES);
+
+        assertEquals(new Quantity<>(9.5, LengthUnit.FEET), l1.subtract(l2));
+    }
+    @Test
+    void testDivision_FeetByFeet() {
+
+        Quantity<LengthUnit> l1 = new Quantity<>(10.0, LengthUnit.FEET);
+        Quantity<LengthUnit> l2 = new Quantity<>(5.0, LengthUnit.FEET);
+
+        assertEquals(2.0, l1.divide(l2));
+    }
 }

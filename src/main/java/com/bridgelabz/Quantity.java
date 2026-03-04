@@ -71,6 +71,62 @@ public class Quantity<U extends IMeasurable> {
 
         return new Quantity<>(result, targetUnit);
     }
+    public Quantity<U> subtract(Quantity<U> other) {
+        if (other == null)
+            throw new IllegalArgumentException("Other quantity cannot be null");
+
+        if (!unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Cannot operate on different measurement categories");
+
+        double base1 = this.toBaseUnit();
+        double base2 = other.toBaseUnit();
+
+        double resultBase = base1 - base2;
+
+        double resultValue = unit.convertFromBaseUnit(resultBase);
+
+        resultValue = Math.round(resultValue * 100.0) / 100.0;
+
+        return new Quantity<>(resultValue, unit);
+    }
+    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Other quantity cannot be null");
+
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        if (!unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Cannot operate on different measurement categories");
+
+        double base1 = this.toBaseUnit();
+        double base2 = other.toBaseUnit();
+
+        double resultBase = base1 - base2;
+
+        double resultValue = targetUnit.convertFromBaseUnit(resultBase);
+
+        resultValue = Math.round(resultValue * 100.0) / 100.0;
+
+        return new Quantity<>(resultValue, targetUnit);
+    }
+    public double divide(Quantity<U> other) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Other quantity cannot be null");
+
+        if (!unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Cannot operate on different measurement categories");
+
+        double base1 = this.toBaseUnit();
+        double base2 = other.toBaseUnit();
+
+        if (base2 == 0)
+            throw new ArithmeticException("Division by zero");
+
+        return base1 / base2;
+    }
 
     @Override
     public boolean equals(Object obj) {

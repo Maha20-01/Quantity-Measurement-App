@@ -169,4 +169,11 @@ public class QuantityMeasurementApp {
             return value + " " + unit;
         }
     }
-}
+    public static void main(String[] args) {
+
+        Quantity<LengthUnit> l1 = new Quantity<>(10.0, LengthUnit.FEET);
+        Quantity<LengthUnit> l2 = new Quantity<>(6.0, LengthUnit.INCHES);
+
+        System.out.println("Subtraction: " + l1.subtract(l2));
+        System.out.println("Division: " + l1.divide(l2));
+}}

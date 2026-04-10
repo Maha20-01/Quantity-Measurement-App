@@ -2,14 +2,17 @@ package com.bridgelabz.service;
 
 import com.bridgelabz.LengthUnit;
 import com.bridgelabz.Quantity;
-import com.bridgelabz.dto.QuantityDTO;
+import com.bridgelabz.dto.QuantityRequestDTO;
+import com.bridgelabz.dto.QuantityResponseDTO;
 import com.bridgelabz.entity.QuantityMeasurementEntity;
-import com.bridgelabz.repository.IQuantityMeasurementRepository;
 
+import com.bridgelabz.repository.IQuantityMeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
@@ -17,64 +20,80 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
     @Autowired
     private IQuantityMeasurementRepository repository;
 
+    // ✅ COMPARE
     @Override
-    public boolean compare(QuantityDTO q1, QuantityDTO q2) {
+    @Transactional
+    public boolean compare(QuantityRequestDTO request) {
 
-        LengthUnit unit1 = LengthUnit.valueOf(q1.getUnit());
-        LengthUnit unit2 = LengthUnit.valueOf(q2.getUnit());
+        LengthUnit unit1 = LengthUnit.valueOf(request.getFirstUnit());
+        LengthUnit unit2 = LengthUnit.valueOf(request.getSecondUnit());
 
-        Quantity<LengthUnit> qty1 = new Quantity<>(q1.getValue(), unit1);
-        Quantity<LengthUnit> qty2 = new Quantity<>(q2.getValue(), unit2);
+        Quantity<LengthUnit> qty1 = new Quantity<>(request.getFirstValue(), unit1);
+        Quantity<LengthUnit> qty2 = new Quantity<>(request.getSecondValue(), unit2);
 
         boolean result = qty1.equals(qty2);
 
-        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
-        entity.setFirstValue(q1.getValue());
-        entity.setFirstUnit(q1.getUnit());
-        entity.setSecondValue(q2.getValue());
-        entity.setSecondUnit(q2.getUnit());
-        entity.setOperation("COMPARE");
-        entity.setResultValue(result ? 1 : 0);
-        entity.setResultUnit("BOOLEAN");
+        // Save to DB
+        QuantityMeasurementEntity entity = QuantityMeasurementEntity.builder()
+                .firstValue(request.getFirstValue())
+                .firstUnit(request.getFirstUnit())
+                .secondValue(request.getSecondValue())
+                .secondUnit(request.getSecondUnit())
+                .operation("COMPARE")
+                .resultValue(result ? 1 : 0)
+                .resultUnit("BOOLEAN")
+                .build();
 
         repository.save(entity);
 
         return result;
     }
 
+    // ✅ ADD
     @Override
-    public double add(QuantityDTO q1, QuantityDTO q2) {
+    @Transactional
+    public QuantityResponseDTO add(QuantityRequestDTO request) {
 
-        LengthUnit unit1 = LengthUnit.valueOf(q1.getUnit());
-        LengthUnit unit2 = LengthUnit.valueOf(q2.getUnit());
+        LengthUnit unit1 = LengthUnit.valueOf(request.getFirstUnit());
+        LengthUnit unit2 = LengthUnit.valueOf(request.getSecondUnit());
 
-        Quantity<LengthUnit> qty1 = new Quantity<>(q1.getValue(), unit1);
-        Quantity<LengthUnit> qty2 = new Quantity<>(q2.getValue(), unit2);
+        Quantity<LengthUnit> qty1 = new Quantity<>(request.getFirstValue(), unit1);
+        Quantity<LengthUnit> qty2 = new Quantity<>(request.getSecondValue(), unit2);
 
         Quantity<LengthUnit> result = qty1.add(qty2);
 
         double resultValue = result.getValue();
 
-        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
-        entity.setFirstValue(q1.getValue());
-        entity.setFirstUnit(q1.getUnit());
-        entity.setSecondValue(q2.getValue());
-        entity.setSecondUnit(q2.getUnit());
-        entity.setOperation("ADD");
-        entity.setResultValue(resultValue);
-        entity.setResultUnit(q1.getUnit());
+        // Save to DB
+        QuantityMeasurementEntity entity = QuantityMeasurementEntity.builder()
+                .firstValue(request.getFirstValue())
+                .firstUnit(request.getFirstUnit())
+                .secondValue(request.getSecondValue())
+                .secondUnit(request.getSecondUnit())
+                .operation("ADD")
+                .resultValue(resultValue)
+                .resultUnit(request.getFirstUnit())
+                .build();
 
         repository.save(entity);
 
-        return resultValue;
+        // Return DTO
+        return QuantityResponseDTO.builder()
+                .resultValue(resultValue)
+                .resultUnit(request.getFirstUnit())
+                .build();
     }
 
+    // ✅ GET ALL RESULTS
     @Override
-    public List<QuantityMeasurementEntity> getAllResults() {
-        return repository.findAll();
-    }
-    @Override
-    public void saveResult(QuantityMeasurementEntity entity) {
-        repository.save(entity);
+    public List<QuantityResponseDTO> getAllResults() {
+
+        return repository.findAll()
+                .stream()
+                .map(entity -> QuantityResponseDTO.builder()
+                        .resultValue(entity.getResultValue())
+                        .resultUnit(entity.getResultUnit())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

@@ -1,44 +1,36 @@
 package com.bridgelabz.controller;
 
-import com.bridgelabz.dto.QuantityDTO;
-import com.bridgelabz.entity.QuantityMeasurementEntity;
+import com.bridgelabz.dto.QuantityRequestDTO;
+import com.bridgelabz.dto.QuantityResponseDTO;
 import com.bridgelabz.service.IQuantityMeasurementService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/quantity")
+@RequestMapping("/api/quantity")
 public class QuantityMeasurementController {
 
     @Autowired
     private IQuantityMeasurementService service;
 
-    // 🔥 ADD API
+    // ✅ ADD API
     @PostMapping("/add")
-    public double add(@RequestBody List<QuantityDTO> quantities) {
-        return service.add(quantities.get(0), quantities.get(1));
+    public QuantityResponseDTO add(@RequestBody QuantityRequestDTO request) {
+        return service.add(request);
     }
 
-    // 🔥 COMPARE API
+    // ✅ COMPARE API
     @PostMapping("/compare")
-    public boolean compare(@RequestBody List<QuantityDTO> quantities) {
-        return service.compare(quantities.get(0), quantities.get(1));
+    public boolean compare(@RequestBody QuantityRequestDTO request) {
+        return service.compare(request);
     }
 
-    // 🔥 SAVE API
-    @PostMapping("/save")
-    public ResponseEntity<String> save(@RequestBody QuantityMeasurementEntity entity) {
-        service.saveResult(entity);
-        return ResponseEntity.ok("Saved Successfully");
-    }
-
-    // 🔥 GET ALL
-    @GetMapping("/all")
-    public List<QuantityMeasurementEntity> getAll() {
+    // ✅ GET ALL RESULTS
+    @GetMapping("/results")
+    public List<QuantityResponseDTO> getAllResults() {
         return service.getAllResults();
     }
 }

@@ -1,18 +1,15 @@
 package com.bridgelabz.service;
 
-import com.bridgelabz.dto.QuantityDTO;
-import com.bridgelabz.entity.QuantityMeasurementEntity;
+import com.bridgelabz.dto.QuantityRequestDTO;
+import com.bridgelabz.dto.QuantityResponseDTO;
 
 import java.util.List;
 
 public interface IQuantityMeasurementService {
 
-    boolean compare(QuantityDTO q1, QuantityDTO q2);
+    boolean compare(QuantityRequestDTO request);
 
-    double add(QuantityDTO q1, QuantityDTO q2);
+    QuantityResponseDTO add(QuantityRequestDTO request);
 
-    // 🔥 NEW (UC16)
-    void saveResult(QuantityMeasurementEntity entity);
-
-    List<QuantityMeasurementEntity> getAllResults();
+    List<QuantityResponseDTO> getAllResults();
 }

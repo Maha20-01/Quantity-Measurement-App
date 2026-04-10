@@ -1,10 +1,10 @@
 package com.bridgelabz.repository;
 
-import java.util.List;
 import com.bridgelabz.entity.QuantityMeasurementEntity;
-public interface IQuantityMeasurementRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    void save(QuantityMeasurementEntity entity);
-
-    List<QuantityMeasurementEntity> findAll();
+@Repository
+public interface IQuantityMeasurementRepository
+        extends JpaRepository<QuantityMeasurementEntity, Long> {
 }

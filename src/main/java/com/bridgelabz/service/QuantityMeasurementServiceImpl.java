@@ -6,13 +6,16 @@ import com.bridgelabz.dto.QuantityDTO;
 import com.bridgelabz.entity.QuantityMeasurementEntity;
 import com.bridgelabz.repository.IQuantityMeasurementRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService {
 
+    @Autowired
     private IQuantityMeasurementRepository repository;
-
-    public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public boolean compare(QuantityDTO q1, QuantityDTO q2) {
@@ -23,7 +26,20 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         Quantity<LengthUnit> qty1 = new Quantity<>(q1.getValue(), unit1);
         Quantity<LengthUnit> qty2 = new Quantity<>(q2.getValue(), unit2);
 
-        return qty1.equals(qty2);
+        boolean result = qty1.equals(qty2);
+
+        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
+        entity.setFirstValue(q1.getValue());
+        entity.setFirstUnit(q1.getUnit());
+        entity.setSecondValue(q2.getValue());
+        entity.setSecondUnit(q2.getUnit());
+        entity.setOperation("COMPARE");
+        entity.setResultValue(result ? 1 : 0);
+        entity.setResultUnit("BOOLEAN");
+
+        repository.save(entity);
+
+        return result;
     }
 
     @Override
@@ -37,6 +53,28 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
         Quantity<LengthUnit> result = qty1.add(qty2);
 
-        return result.getValue();
+        double resultValue = result.getValue();
+
+        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
+        entity.setFirstValue(q1.getValue());
+        entity.setFirstUnit(q1.getUnit());
+        entity.setSecondValue(q2.getValue());
+        entity.setSecondUnit(q2.getUnit());
+        entity.setOperation("ADD");
+        entity.setResultValue(resultValue);
+        entity.setResultUnit(q1.getUnit());
+
+        repository.save(entity);
+
+        return resultValue;
     }
+
+    @Override
+    public List<QuantityMeasurementEntity> getAllResults() {
+        return repository.findAll();
     }
+    @Override
+    public void saveResult(QuantityMeasurementEntity entity) {
+        repository.save(entity);
+    }
+}

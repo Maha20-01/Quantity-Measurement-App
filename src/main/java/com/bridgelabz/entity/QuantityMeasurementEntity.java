@@ -1,79 +1,38 @@
 package com.bridgelabz.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "quantity_measurements")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class QuantityMeasurementEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private double firstValue;
+
+    @Column(nullable = false)
     private String firstUnit;
+
+    @Column(nullable = false)
     private double secondValue;
+
+    @Column(nullable = false)
     private String secondUnit;
+
+    @Column(nullable = false)
     private String operation;
+
+    @Column(nullable = false)
     private double resultValue;
+
+    @Column(nullable = false)
     private String resultUnit;
-
-    // getters & setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getFirstValue() {
-        return firstValue;
-    }
-
-    public void setFirstValue(double firstValue) {
-        this.firstValue = firstValue;
-    }
-
-    public String getFirstUnit() {
-        return firstUnit;
-    }
-
-    public void setFirstUnit(String firstUnit) {
-        this.firstUnit = firstUnit;
-    }
-
-    public double getSecondValue() {
-        return secondValue;
-    }
-
-    public void setSecondValue(double secondValue) {
-        this.secondValue = secondValue;
-    }
-
-    public String getSecondUnit() {
-        return secondUnit;
-    }
-
-    public void setSecondUnit(String secondUnit) {
-        this.secondUnit = secondUnit;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
-
-    public double getResultValue() {
-        return resultValue;
-    }
-
-    public void setResultValue(double resultValue) {
-        this.resultValue = resultValue;
-    }
-
-    public String getResultUnit() {
-        return resultUnit;
-    }
-
-    public void setResultUnit(String resultUnit) {
-        this.resultUnit = resultUnit;
-    }
 }

@@ -3,6 +3,8 @@ package com.bridgelabz.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "quantity_measurements")
 @Data
@@ -15,24 +17,24 @@ public class QuantityMeasurementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private double firstValue;
+    @Column(name = "first_val", nullable = false, precision = 10, scale = 2)
+    private BigDecimal firstValue;
 
-    @Column(nullable = false)
+    @Column(name = "first_unit", nullable = false)
     private String firstUnit;
 
-    @Column(nullable = false)
-    private double secondValue;
+    @Column(name = "second_val", nullable = false, precision = 10, scale = 2)
+    private BigDecimal secondValue;
 
-    @Column(nullable = false)
+    @Column(name = "second_unit", nullable = false)
     private String secondUnit;
 
-    @Column(nullable = false)
-    private String operation;
+    @Column(name = "operation_type", nullable = false)
+    private String operationType;
 
-    @Column(nullable = false)
-    private double resultValue;
+    @Column(name = "result_val", nullable = false, precision = 10, scale = 2)
+    private BigDecimal resultValue;
 
-    @Column(nullable = false)
+    @Column(name = "result_unit", nullable = false)
     private String resultUnit;
 }

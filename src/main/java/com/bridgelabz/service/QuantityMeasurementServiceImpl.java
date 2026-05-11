@@ -5,12 +5,12 @@ import com.bridgelabz.Quantity;
 import com.bridgelabz.dto.QuantityRequestDTO;
 import com.bridgelabz.dto.QuantityResponseDTO;
 import com.bridgelabz.entity.QuantityMeasurementEntity;
-
 import com.bridgelabz.repository.IQuantityMeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,12 +35,12 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
         // Save to DB
         QuantityMeasurementEntity entity = QuantityMeasurementEntity.builder()
-                .firstValue(request.getFirstValue())
+                .firstValue(BigDecimal.valueOf(request.getFirstValue()))
                 .firstUnit(request.getFirstUnit())
-                .secondValue(request.getSecondValue())
+                .secondValue(BigDecimal.valueOf(request.getSecondValue()))
                 .secondUnit(request.getSecondUnit())
-                .operation("COMPARE")
-                .resultValue(result ? 1 : 0)
+                .operationType("COMPARE")
+                .resultValue(BigDecimal.valueOf(result ? 1 : 0))
                 .resultUnit("BOOLEAN")
                 .build();
 
@@ -66,12 +66,12 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
         // Save to DB
         QuantityMeasurementEntity entity = QuantityMeasurementEntity.builder()
-                .firstValue(request.getFirstValue())
+                .firstValue(BigDecimal.valueOf(request.getFirstValue()))
                 .firstUnit(request.getFirstUnit())
-                .secondValue(request.getSecondValue())
+                .secondValue(BigDecimal.valueOf(request.getSecondValue()))
                 .secondUnit(request.getSecondUnit())
-                .operation("ADD")
-                .resultValue(resultValue)
+                .operationType("ADD")
+                .resultValue(BigDecimal.valueOf(resultValue))
                 .resultUnit(request.getFirstUnit())
                 .build();
 
@@ -91,7 +91,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         return repository.findAll()
                 .stream()
                 .map(entity -> QuantityResponseDTO.builder()
-                        .resultValue(entity.getResultValue())
+                        .resultValue(entity.getResultValue().doubleValue())
                         .resultUnit(entity.getResultUnit())
                         .build())
                 .collect(Collectors.toList());

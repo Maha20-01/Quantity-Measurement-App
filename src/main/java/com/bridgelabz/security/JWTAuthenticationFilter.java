@@ -28,6 +28,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
+        if (path.startsWith("/oauth2") ||
+                path.startsWith("/login")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader =
                 request.getHeader("Authorization");
         System.out.println("AUTH HEADER = " + authHeader);

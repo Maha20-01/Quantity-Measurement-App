@@ -1,9 +1,9 @@
-package com.bridgelabz.service;
+package com.bridgelabz.service.quantity;
 
-import com.bridgelabz.LengthUnit;
-import com.bridgelabz.Quantity;
-import com.bridgelabz.dto.QuantityRequestDTO;
-import com.bridgelabz.dto.QuantityResponseDTO;
+import com.bridgelabz.enums.LengthUnit;
+import com.bridgelabz.model.Quantity;
+import com.bridgelabz.dto.quantity.QuantityRequestDTO;
+import com.bridgelabz.dto.quantity.QuantityResponseDTO;
 import com.bridgelabz.entity.QuantityMeasurementEntity;
 import com.bridgelabz.repository.IQuantityMeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;

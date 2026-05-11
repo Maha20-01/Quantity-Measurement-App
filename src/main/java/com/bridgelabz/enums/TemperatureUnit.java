@@ -1,6 +1,8 @@
-package com.bridgelabz;
+package com.bridgelabz.enums;
 
-public enum TemperatureUnit implements IMeasurable {
+import com.bridgelabz.model.Measurable;
+
+public enum TemperatureUnit implements Measurable {
 
     CELSIUS,
     FAHRENHEIT;

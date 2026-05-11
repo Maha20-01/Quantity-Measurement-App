@@ -1,14 +1,17 @@
-package com.bridgelabz;
+package com.bridgelabz.enums;
 
-public enum WeightUnit implements IMeasurable {
+import com.bridgelabz.model.Measurable;
 
-    KILOGRAM(1.0),
-    GRAM(0.001),
-    POUND(0.453592);
+public enum LengthUnit implements Measurable {
+
+    FEET(1.0),
+    INCHES(1.0 / 12.0),
+    YARDS(3.0),
+    CENTIMETERS(1.0 / 30.48);
 
     private final double conversionFactor;
 
-    WeightUnit(double conversionFactor) {
+    LengthUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 

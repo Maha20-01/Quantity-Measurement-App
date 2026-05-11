@@ -1,4 +1,4 @@
-package com.bridgelabz.dto;
+package com.bridgelabz.dto.quantity;
 
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.bridgelabz.mapper;
 
-import com.bridgelabz.dto.RegisterRequestDTO;
+import com.bridgelabz.dto.auth.RegisterRequestDTO;
 import com.bridgelabz.entity.UserEntity;
 import org.springframework.stereotype.Component;
 

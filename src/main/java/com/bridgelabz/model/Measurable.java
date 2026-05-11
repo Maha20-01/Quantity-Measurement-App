@@ -1,6 +1,6 @@
-package com.bridgelabz;
+package com.bridgelabz.model;
 
-public interface IMeasurable {
+public interface Measurable {
     @FunctionalInterface
     interface SupportsArithmetic {
         boolean isSupported();

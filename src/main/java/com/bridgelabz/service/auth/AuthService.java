@@ -1,6 +1,8 @@
-package com.bridgelabz.service;
+package com.bridgelabz.service.auth;
 
-import com.bridgelabz.dto.*;
+import com.bridgelabz.dto.auth.AuthResponseDTO;
+import com.bridgelabz.dto.auth.LoginRequestDTO;
+import com.bridgelabz.dto.auth.RegisterRequestDTO;
 import com.bridgelabz.entity.UserEntity;
 import com.bridgelabz.mapper.UserMapper;
 import com.bridgelabz.repository.UserRepository;

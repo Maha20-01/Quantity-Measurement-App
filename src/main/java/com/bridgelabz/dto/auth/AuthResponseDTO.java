@@ -1,4 +1,4 @@
-package com.bridgelabz.dto;
+package com.bridgelabz.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

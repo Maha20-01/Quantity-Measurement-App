@@ -1,8 +1,8 @@
-package com.bridgelabz;
+package com.bridgelabz.model;
 
 import java.util.function.DoubleBinaryOperator;
 
-public class Quantity<U extends IMeasurable> {
+public class Quantity<U extends Measurable> {
 
     private final double value;
     private final U unit;

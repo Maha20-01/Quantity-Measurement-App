@@ -1,7 +1,9 @@
 package com.bridgelabz.controller;
 
-import com.bridgelabz.dto.*;
-import com.bridgelabz.service.AuthService;
+import com.bridgelabz.dto.auth.AuthResponseDTO;
+import com.bridgelabz.dto.auth.LoginRequestDTO;
+import com.bridgelabz.dto.auth.RegisterRequestDTO;
+import com.bridgelabz.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

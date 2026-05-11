@@ -1,7 +1,6 @@
 package com.bridgelabz.model;
 
-import com.bridgelabz.Quantity;
-import com.bridgelabz.LengthUnit;
+import com.bridgelabz.enums.LengthUnit;
 
 public class QuantityModel {
 

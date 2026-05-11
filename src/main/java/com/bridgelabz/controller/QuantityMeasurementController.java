@@ -1,8 +1,8 @@
 package com.bridgelabz.controller;
 
-import com.bridgelabz.dto.QuantityRequestDTO;
-import com.bridgelabz.dto.QuantityResponseDTO;
-import com.bridgelabz.service.IQuantityMeasurementService;
+import com.bridgelabz.dto.quantity.QuantityRequestDTO;
+import com.bridgelabz.dto.quantity.QuantityResponseDTO;
+import com.bridgelabz.service.quantity.IQuantityMeasurementService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.bridgelabz.service;
+package com.bridgelabz.service.quantity;
 
 import com.bridgelabz.entity.QuantityMeasurementEntity;
 import com.bridgelabz.repository.IQuantityMeasurementRepository;

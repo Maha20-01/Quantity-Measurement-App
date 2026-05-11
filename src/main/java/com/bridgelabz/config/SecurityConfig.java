@@ -1,11 +1,11 @@
 package com.bridgelabz.config;
 
-import com.bridgelabz.security.CustomUserDetailsService;
 import com.bridgelabz.security.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -30,18 +29,22 @@ public class SecurityConfig {
 
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
+                                SessionCreationPolicy.IF_REQUIRED
                         )
                 )
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Public APIs
                         .requestMatchers(
                                 "/auth/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/oauth2/**",
+                                "/login/**"
                         ).permitAll()
 
+                        // Protected APIs
                         .requestMatchers("/api/quantity/**")
                         .authenticated()
 
@@ -49,10 +52,14 @@ public class SecurityConfig {
                         .authenticated()
                 )
 
+                // JWT Filter
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
-                );
+                )
+
+                // Google OAuth Login
+                .oauth2Login(Customizer.withDefaults());
 
         return http.build();
     }
